@@ -1,0 +1,2 @@
+# About This Project
+The code from this project is mostly taken directly from the crafting interpreters book. The goal for this is to learn about the methods and concepts used for interpreting and compiling a language for a future project
