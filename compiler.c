@@ -2,10 +2,14 @@
 #include "common.h"
 #include "compiler.h"
 #include "scanner.h"
+#include "vm.h"
 
 
-void compile(const char* source) {
+bool compile(const char* source, Chunk* chunk) {
     initScanner(source);
+    advance();
+    expression();
+    consume(TOKEN_EOF, "Expect end of expression.");
     int line = -1;
     for(;;) {
         Token token = scanToken();

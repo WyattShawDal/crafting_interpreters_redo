@@ -102,9 +102,52 @@ static Token number() {
 static bool isAlpha(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
 }
-static TokenType identifierType() {
+
+static TokenType checkKeyword(int start, int length, const char* rest, TokenType type) {
+    if (scanner.current - scanner.start == start + length && memcmp(scanner.start + start, rest, length) == 0) {
+        return type;
+    }
     return TOKEN_IDENTIFIER;
 }
+
+static TokenType identifierType() {
+    switch(scanner.start[0]) {
+        case 'a': return checkKeyword(1, 2, "nd", TOKEN_AND);
+        case 'c': return checkKeyword(1, 4, "lass", TOKEN_CLASS);
+        case 'e': return checkKeyword(1, 3, "lse", TOKEN_ELSE);
+        case 'f': 
+            if(scanner.current - scanner.start > 1) {
+                switch(scanner.start[1]) {
+                    case 'a': return checkKeyword(2, 3, "lse", TOKEN_FALSE);
+                    case 'o': return checkKeyword(2, 1, "r", TOKEN_FOR);
+                    case 'u': return checkKeyword(2, 2, "n", TOKEN_FUN);
+                }
+            }
+            break;
+        case 'i':
+            if(scanner.current - scanner.start > 1) {
+                switch(scanner.start[1]) {
+                    case 'f': return checkKeyword(2, 0, "", TOKEN_IF);
+                    case 'n': return checkKeyword(2, 1, "il", TOKEN_NIL);
+                }
+            }
+            break;
+        case 'o': return checkKeyword(1, 1, "r", TOKEN_OR);
+        case 'p': return checkKeyword(1, 5, "rint", TOKEN_PRINT);
+        case 'r': return checkKeyword(1, 6, "eturn", TOKEN_RETURN);
+        case 's': return checkKeyword(1, 4, "uper", TOKEN_SUPER);
+        case 't':
+            if(scanner.current - scanner.start > 1) {
+                switch(scanner.start[1]) {
+                    case 'h': return checkKeyword(2, 2, "is", TOKEN_THIS);
+                    case 'r': return checkKeyword(2, 2, "ue", TOKEN_TRUE);
+                }
+            }
+            break;
+    return TOKEN_IDENTIFIER;
+    }
+}
+
 static Token identifier() {
     while(isAlpha(peek()) || isDigit(peek())) advance();
 
