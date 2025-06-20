@@ -4,7 +4,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
+
+#define TEST_LEVEL 6
+#define DEBUG_TRACE_EXECUTION
 
 #endif
 

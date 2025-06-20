@@ -3,6 +3,7 @@
 
 #include "common.h"
 
+
 typedef double Value;
 
 typedef struct {

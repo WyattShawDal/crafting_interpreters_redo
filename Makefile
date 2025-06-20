@@ -61,6 +61,6 @@ run: all
 	@echo Cleaning up build directory after run...
 	@if exist "$(subst /,\,$(BUILD_DIR))" rd /s /q "$(subst /,\,$(BUILD_DIR))"
 
-# Include the dependency files from the build directory.
+# Include the dependeny files from the build directory.
 # The hyphen '-' allows Make to continue even if a .d file doesn't exist yet.
 -include $(DEPS)
